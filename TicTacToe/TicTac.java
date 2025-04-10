@@ -1,4 +1,6 @@
 import java.util.Scanner;
+import java.util.Random;
+
 
 public class TicTac{
 	public static void main(String[] args){
@@ -6,9 +8,14 @@ public class TicTac{
 			       0,0,0,
 			       0,0,0};
 		int choice = -1;
+		int compChoice = -1;
 
 		Scanner scan = new Scanner(System.in);
+		Random rand = new Random();
+
 		boolean gameOver = false;
+		boolean spotChecker = false;
+
 		while(!gameOver){
 			System.out.println();
 			printBoard(spots);	
@@ -18,15 +25,115 @@ public class TicTac{
 				if(choice < 1 || choice > 9){
 					System.out.println("Invalid option");
 				}	
-				if(spots[choice-1]  != 0){
+				else if(spots[choice-1]  != 0){
 					System.out.println("Spot in use");
 					choice = -1;
 				}
 			}while(choice < 1 || choice > 9);
 			spots[choice-1] = 1;
 
+			printBoard(spots);
+
+			if(winCheck(spots) == 1){
+				gameOver = true;
+			}
+			else if(winCheck(spots) == 2){
+				System.out.println("YOU LOSE!");
+				gameOver = true;
+			}
+
+			spotChecker = false;
+			do{
+				compChoice = rand.nextInt(10);
+				if(spots[compChoice] == 0){
+					spots[compChoice] = 2;
+					spotChecker = true;
+				}
+			}while(!spotChecker);
+			printBoard(spots);
+			winCheck(spots);	
+
 		}
 
+	}
+	public static int winCheck(int[] spots){
+		if(spots[0] == 1){
+			if(spots[1] == 1 && spots[2] == 1){
+				System.out.println("You win!");
+				return 1;
+			}
+			if(spots[3] == 1 && spots[6] == 1){
+				System.out.println("You win!");
+				return 1;
+			}
+			if(spots[4] == 1 && spots[8] == 1){
+				System.out.println("You win!");
+				return 1;
+			}
+		}
+		if(spots[1] == 1 && spots[4] == 1 && spots[7] == 1){
+			System.out.println("You win!");
+			return 1;
+		}
+		if(spots[2] == 1){
+			if(spots[4] == 1 && spots[6] == 1){
+				System.out.println("You win!");
+				return 1;
+			}
+			if(spots[5] == 1 && spots[8] == 1){
+				System.out.println("You win!");
+				return 1;
+			}
+		}
+		if(spots[3] == 1 && spots[4] == 1 && spots[5] == 1){
+			System.out.println("You win!");
+			return 1;
+		}
+		if(spots[6] == 1 && spots[7] == 1 && spots[8] == 1){
+			System.out.println("You win!");
+			return 1;
+		}
+
+
+		if(spots[0] == 2){
+			if(spots[1] == 2 && spots[2] == 2){
+				System.out.println("Computer wins!");
+				return 2;
+			}
+			if(spots[3] == 2 && spots[6] == 2){
+				System.out.println("Computer wins!");
+		
+				return 2;
+			}
+			if(spots[4] == 2 && spots[8] == 2){
+				System.out.println("Computer wins!");
+				return 2;
+			}
+		}
+		if(spots[1] == 2 && spots[4] == 2 && spots[7] == 2){
+			System.out.println("Computer wins!");
+			return 2;
+		}
+		if(spots[2] == 2){
+			if(spots[4] == 2 && spots[6] == 2){
+				System.out.println("Computer wins!");
+				return 2;
+			}
+			if(spots[5] == 2 && spots[8] == 2){
+				System.out.println("Computer wins!");
+				return 2;
+			}
+		}
+		if(spots[3] == 2 && spots[4] == 2 && spots[5] == 2){
+			System.out.println("Computer wins!");
+			return 2;
+		}
+		if(spots[6] == 2 && spots[7] == 2 && spots[8] == 2){
+			System.out.println("Computer wins!");
+			return 2;
+		}
+
+		return 0;
 	}
 	public static void printBoard(int[] spots){
 		//this function to take in where the players have gone and 
