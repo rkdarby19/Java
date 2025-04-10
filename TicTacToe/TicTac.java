@@ -5,8 +5,27 @@ public class TicTac{
 		int[] spots = {0,0,0,
 			       0,0,0,
 			       0,0,0};
+		int choice = -1;
 
-		printBoard(spots);	
+		Scanner scan = new Scanner(System.in);
+		boolean gameOver = false;
+		while(!gameOver){
+			System.out.println();
+			printBoard(spots);	
+			do{
+				System.out.print("\nChoose an empty spot (1-9): ");
+				choice = scan.nextInt();
+				if(choice < 1 || choice > 9){
+					System.out.println("Invalid option");
+				}	
+				if(spots[choice-1]  != 0){
+					System.out.println("Spot in use");
+					choice = -1;
+				}
+			}while(choice < 1 || choice > 9);
+			spots[choice-1] = 1;
+
+		}
 
 	}
 	public static void printBoard(int[] spots){
